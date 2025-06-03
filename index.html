@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HariKrishna Bus Service - Spiritual Tours of India</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #77b6a1, #00ffea);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 3rem 0;
+        }
+
+        .tour-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+      
+        .tour-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tour-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            padding: 1rem;
+        }
+
+        .tour-image {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(45deg, #ddd, #f0f0f0);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+        }
+
+        .tour-details {
+            padding: 1.5rem;
+        }
+
+        .places-list {
+            margin: 1rem 0;
+        }
+
+        .places-list h4 {
+            color: #ff4500;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .places {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .place-tag {
+            background: linear-gradient(135deg, #ff7b00, #ff4500);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin: 1rem 0;
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .book-btn:hover {
+            background: linear-gradient(135deg, #20c997, #28a745);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .bus-layout {   
+            padding: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .bus-container {
+            background: linear-gradient(180deg, #f8f9fa, #e9ecef);
+            border: 1px solid #4a90e2;
+            border-radius: 15px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .bus-container::before {
+            content: "🚌 Select Your Seat No.";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #4a90e2;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .driver-area {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .seats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .seat {
+            width: 35px;
+            height: 35px;
+            border: 3px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .seat:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .seat.occupied {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            cursor: not-allowed;
+        }
+
+        .seat.selected {
+            background: linear-gradient(135deg, #ff7b00, #ff4500);
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(255, 123, 0, 0.4);
+        }
+
+        .seat-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .booking-summary {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .booking-summary h4 {
+            color: #4a90e2;
+            margin-bottom: 1rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #28a745;
+        }
+
+        .pay-btn {
+            background: linear-gradient(135deg, #ff7b00, #ff4500);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pay-btn:hover {
+            background: linear-gradient(135deg, #ff4500, #ff7b00);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 123, 0, 0.4);
+        }
+
+        .pay-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .payment-modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            margin: 5% auto;
+        }
+
+        .payment-options {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .payment-option {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-option:hover {
+            border-color: #4a90e2;
+            background: #f8f9fa;
+        }
+
+        .payment-option.selected {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tours-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .seats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+            
+            .seat {
+                width: 40px;
+                height: 40px;
+                font-size: 0.8rem;
+            }
+            
+            .seat-legend {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>🕉️ Hari Krishna Bus Service 🕉️</h1>
+            <p>Sacred Journeys Across Divine India</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <style>   .tour-header {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }</style>
+          
+
+        <div class="tours-grid">
+            <!-- Rajasthan Tour -->
+            <div class="tour-card">
+                <div class="tour-header">
+                                <img src="img/818VMSHmdjL.jpg" alt="Rajasthan Divine Circuit" style="width:100%; height:200px; object-fit:cover; border-top-left-radius:15px; border-top-right-radius:15px;">
+
+                    <h3>🏛️ Rajasthan Divine Circuit</h3>
+                    <p>Khatu Shyam • Salsar • Rani Sati</p>
+                </div>
+                <div class="tour-gallery">
+                    <div class="tour-image">🛕 Khatu Shyam Temple - Lord Krishna's Avatar</div>
+                    <div class="tour-image">🏛️ Salsar Balaji - Powerful Hanuman Temple</div>
+                    <div class="tour-image">👑 Rani Sati Temple- Divine Shakti Peeth</div>
+                    <div class="tour-image">🏛️ Panchdev Temple - Lord Vishnu's Avatar</div>
+                </div>
+                <div class="tour-details">
+                    <div class="places-list">
+                        <h4>Sacred Destinations:</h4>
+                        <div class="places">
+                            <span class="place-tag">Khatu Shyam</span>
+                            <span class="place-tag">Salsar Balaji</span>
+                            <span class="place-tag">Rani Sati Dadi</span>
+                            <span class="place-tag">Panchdev Mandir</span>
+                        </div>
+                    </div>
+                    <div class="price">₹1600 per person</div>
+                    <button class="book-btn" onclick="openBooking('Rajasthan Divine Circuit', 1600)">Book This Yatra</button>
+                </div>
+            </div>
+
+            <!-- Uttarakhand Haridwar-Rishikesh Tour -->
+            <div class="tour-card">
+                <div class="tour-header">
+                                <img src="img/Interesting-Facts-About-Rishikesh.webp" alt="Rajasthan Divine Circuit" style="width:100%; height:200px; object-fit:cover; border-top-left-radius:15px; border-top-right-radius:15px;">
+
+                    <h3>🏔️ Uttarakhand Spiritual Journey</h3>
+                    <p>Haridwar • Rishikesh • Neelkanth</p>
+                </div>
+                <div class="tour-gallery">
+                    <div class="tour-image">🕉️ Haridwar(Har Ki Pauri) Gateway to God</div>
+                    <div class="tour-image">🧘 Rishikesh - Yoga Capital of the World </div>
+                    <div class="tour-image">🏔️ Neelkanth Mahadev - Sacred Shiva Temple</div>
+                    <div class="tour-image">🌊 Ganga Aarti</div>
+                </div>
+                <div class="tour-details">
+                    <div class="places-list">
+                        <h4>Sacred Destinations:</h4>
+                        <div class="places">
+                            <span class="place-tag">Haridwar</span>
+                            <span class="place-tag">Rishikesh</span>
+                            <span class="place-tag">Neelkanth</span>
+                        </div>
+                    </div>
+                    <div class="price">₹2200 per person</div>
+                    <button class="book-btn" onclick="openBooking('Ganga Darshan Yatra', 2200)">Book This Yatra</button>
+                </div>
+            </div>
+
+            <!-- Nainital Tour -->
+            <div class="tour-card">
+                <div class="tour-header">
+                                <img src="img/Nainital.jpg" alt="Rajasthan Divine Circuit" style="width:100%; height:200px; object-fit:cover; border-top-left-radius:15px; border-top-right-radius:15px;">
+
+                    <h3>🏞️ Nainital Hill Station</h3>
+                    <p>Nainital • Bhimtal • Naukuchiatal</p>
+                </div>
+                <div class="tour-gallery">
+                    <div class="tour-image">🏞️ Naini Lake</div>
+                    <div class="tour-image">⛰️Hanuman Garhi - Hilltop Hanuman Templ </div>
+                    <div class="tour-image">🚡 Bhimtal & Sattal - Sacred Lakes</div>
+                    <div class="tour-image">🛕Naina Devi Temple - Shakti Peeth at Naini Lake</div>
+                    <div class="tour-image">🛕Neeb Karoli Dham -Hindu guru and a devotee of the Hindu deity Hanuman</div>
+                </div>
+                <div class="tour-details">
+                    <div class="places-list">
+                        <h4>Beautiful Destinations:</h4>
+                        <div class="places">
+                            <span class="place-tag">Nainital</span>
+                            <span class="place-tag">Bhimtal</span>
+                            <span class="place-tag">Neeb Karoli</span>
+                        </div>
+                    </div>
+                    <div class="price">₹7,499 per person</div>
+                    <button class="book-btn" onclick="openBooking('Nainital Hill Station', 7499)">Book This Yatra</button>
+                </div>
+            </div>
+
+            <!-- Char Dham Yatra -->
+            <div class="tour-card">
+                <div class="tour-header">
+                                <img src="img/char-dham-yatra-package-2025.webp" alt="Rajasthan Divine Circuit" style="width:100%; height:200px; object-fit:cover; border-top-left-radius:15px; border-top-right-radius:15px;">
+
+                    <h3>🏔️ Uttrakhand Char Dham</h3>
+                    <p>Yamunotri • Gangotri • Kedarnath • Badrinath</p>
+                </div>
+                <div class="tour-gallery">
+                    <div class="tour-image">🏔️ Yamunotri- Source of River Yamuna</div>
+                    <div class="tour-image">❄️ Gangotri - Origin of Holy Ganga</div>
+                    <div class="tour-image">🛕 KedarnathKedarnath - Sacred Jyotirlinga</div>
+                    <div class="tour-image">🏛️ Badrinath - Holy Vishnu Temple</div>
+                </div>
+                <div class="tour-details">
+                    <div class="places-list">
+                        <h4>Sacred Destinations:</h4>
+                        <div class="places">
+                            <span class="place-tag">Yamunotri</span>
+                            <span class="place-tag">Gangotri</span>
+                            <span class="place-tag">Kedarnath</span>
+                            <span class="place-tag">Badrinath</span>
+                        </div>
+                    </div>
+                    <div class="price">₹22,999 per person</div>
+                    <button class="book-btn" onclick="openBooking('Uttrakhand Char Dham', 22999)">Book This Yatra</button>
+                </div>
+            </div>
+
+            <!-- UP Spiritual Tour -->
+            <div class="tour-card">
+                <div class="tour-header">
+                                <img src="img/ayodhya-temple.webp" alt="Rajasthan Divine Circuit" style="width:100%; height:200px; object-fit:cover; border-top-left-radius:15px; border-top-right-radius:15px;">
+
+                    <h3>🕉️ UP Spiritual Triangle</h3>
+                    <p>Ayodhya • Varanasi • Prayagraj</p>
+                </div>
+                <div class="tour-gallery">
+                    <div class="tour-image">🏛️ Ayodhya - Birthplace of Lord Rama</div>
+                    <div class="tour-image">🕉️Varanasi - Oldest Living City</div>
+                    <div class="tour-image">🌊 Prayagraj - Triveni Sangam</div>
+                    
+                </div>
+                <div class="tour-details">
+                    <div class="places-list">
+                        <h4>Sacred Destinations:</h4>
+                        <div class="places">
+                            <span class="place-tag">Ayodhya</span>
+                            <span class="place-tag">Varanasi</span>
+                            <span class="place-tag">Prayagraj</span>
+                        </div>
+                    </div>
+                    <div class="price">₹5,000 per person</div>
+                    <button class="book-btn" onclick="openBooking('UP Spiritual Triangle', 5000)">Book This Yatra</button>
+                </div>
+            </div>
+
+            <!-- Mathura Vrindavan Tour -->
+            <div class="tour-card">
+                <div class="tour-header">
+                                <img src="img/PremMandirSideViewFromCanteen.jpg" alt="Rajasthan Divine Circuit" style="width:100%; height:200px; object-fit:cover; border-top-left-radius:15px; border-top-right-radius:15px;">
+
+                    <h3>🎭 Krishna Leela Bhoomi</h3>
+                    <p>Mathura • Vrindavan • Govardhan</p>
+                </div>
+                <div class="tour-gallery">
+                    <div class="tour-image">🛕 Krishna Janmabhoomi</div>
+                    <div class="tour-image">🏛️ Banke Bihari</div>
+                    <div class="tour-image">🎭 ISKCON Temple</div>
+                    <div class="tour-image">⛰️ Govardhan Parvat</div>
+                </div>
+                <div class="tour-details">
+                    <div class="places-list">
+                        <h4>Sacred Destinations:</h4>
+                        <div class="places">
+                            <span class="place-tag">Mathura</span>
+                            <span class="place-tag">Vrindavan</span>
+                            <span class="place-tag">Govardhan</span>
+                        </div>
+                    </div>
+                    <div class="price">₹5,999 per person</div>
+                    <button class="book-btn" onclick="openBooking('Krishna Leela Bhoomi', 5999)">Book This Yatra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Choose Us Section -->
+    <div style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 4rem 0; margin-top: 3rem;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; color: #4a90e2; margin-bottom: 1rem;">🌟 Why Choose Hari Krishna Bus Service ?</h2>
+                <p style="font-size: 1.2rem; color: #666;">Experience the difference with India's most trusted spiritual travel partner</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <div style="background: rgb(174, 227, 248); padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚌</div>
+                    <h3 style="color: rgb(74, 144, 226); margin-bottom: 1rem;">Luxury AC Buses</h3>
+                    <p style="color: #666; line-height: 1.6;">Modern 50-seater luxury buses with comfortable reclining seats, ample legroom, and premium amenities for your comfortable journey.</p>
+                </div>
+                
+                <div style="background: rgb(250, 201, 201); padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍✈️</div>
+                    <h3 style="color: #4a90e2; margin-bottom: 1rem;">Expert Drivers</h3>
+                    <p style="color: #666; line-height: 1.6;">Professional and experienced drivers with deep knowledge of pilgrimage routes ensuring safe and smooth travel experience.</p>
+                </div>
+                
+                <div style="background: rgb(208, 230, 174); padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
+                    <h3 style="color: #4a90e2; margin-bottom: 1rem;">24/7 Support</h3>
+                    <p style="color: #666; line-height: 1.6;">Round-the-clock customer support and assistance throughout your journey. Emergency helpline available at all times.</p>
+                </div>
+                
+                <div style="background: rgb(241, 237, 167); padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                    <h3 style="color: #4a90e2; margin-bottom: 1rem;">Best Prices</h3>
+                    <p style="color: #666; line-height: 1.6;">Competitive and transparent pricing with no hidden charges. Early booking discounts and group booking offers available.</p>
+                </div>
+                
+                <div style="background: rgb(231, 158, 219); padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h3 style="color: #4a90e2; margin-bottom: 1rem;">Perfect Itinerary</h3>
+                    <p style="color: #666; line-height: 1.6;">Carefully planned routes covering all major temples and spiritual destinations with optimal time management and comfort.</p>
+                </div>
+                
+                <div style="background: rgb(170, 241, 220); padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⭐</div>
+                    <h3 style="color: #4a90e2; margin-bottom: 1rem;">15+ Years Experience</h3>
+                    <p style="color: #666; line-height: 1.6;">Over 15 years of experience in organizing spiritual tours with thousands of satisfied pilgrims and excellent track record.</p>
+                </div>
+                
+                <div style="background: rgb(230, 255, 116); padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🏨</div>
+                    <h3 style="color: rgb(74, 144, 226); margin-bottom: 1rem;">Quality Accommodation</h3>
+                    <p style="color: #666; line-height: 1.6;">Clean and comfortable accommodation arrangements near temples and pilgrimage sites with all basic amenities included.</p>
+                </div>
+                
+                <div style="background: rgb(189, 174, 241); padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🙏</div>
+                    <h3 style="color: #4a90e2; margin-bottom: 1rem;">Spiritual Guidance</h3>
+                    <p style="color: #666; line-height: 1.6;">Knowledgeable guides who share religious significance, history, and spiritual importance of each destination during the journey.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+<div style="background: rgb(185, 241, 248); padding: 2rem; border-radius: 15px; text-align: center; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease;" 
+     onmouseover="this.style.transform='translateY(-10px)'" 
+     onmouseout="this.style.transform='translateY(0)'">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">🥗</div>
+    <h3 style="color: #4a90e2; margin-bottom: 1rem;">Sattvic Food Facilities</h3>
+    <p style="color: #666; line-height: 1.6;">Pure vegetarian sattvic meals provided throughout the journey, cooked in hygienic conditions to enhance your spiritual experience.</p>
+</div>
+
+
+<!-- Contact Section -->
+    <div style="background: linear-gradient(135deg, #4a90e2, #357abd); color: white; padding: 4rem 0;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">📞 Get In Touch With Us</h2>
+                <p style="font-size: 1.2rem; opacity: 0.9;">We're here to help you plan your perfect spiritual journey</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+                <!-- Contact Us -->
+                <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        📞 Contact Us
+                    </h3>
+                    <div style="space-y: 1rem;">
+                        <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.2rem;">📱</span>
+                            <div>
+                                <strong>Mobile:</strong><br>
+                                <a href="tel:+918368194009" style="color: white; text-decoration: none;">+91 83681 94009</a><br>
+                                <a href="tel:+918700579949" style="color: white; text-decoration: none;">+91 87005 79949</a>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.2rem;">☎️</span>
+                           
+                        <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.2rem;">💬</span>
+                            <div>
+                                <strong>WhatsApp:</strong><br>
+                                <a href="https://wa.me/918368194009" style="color: white; text-decoration: none;">+91 8368194009</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Email Us -->
+                <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        📧 Email Us
+                    </h3>
+                    <div style="space-y: 1rem;">
+                        <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.2rem;">📧</span>
+                            <div>
+                                <strong>General Inquiries:</strong><br>
+                                <a href="mailto:info.harikrishnabusservice@gmail.com
+" style="color: white; text-decoration: none;">info.harikrishnabusservice@gmail.com
+</a>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.2rem;">🎫</span>
+                            <div>
+                                <strong>Bookings:</strong><br>
+                                <a href="mailto:bookings@dharmikyatra.com" style="color: white; text-decoration: none;">bookings@dharmikyatra.com</a>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.2rem;">🛠️</span>
+                            <div>
+                                <strong>Support:</strong><br>
+                                <a href="mailto:support@dharmikyatra.com" style="color: white; text-decoration: none;">support@dharmikyatra.com</a>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.2rem;">💼</span>
+                            <div>
+                                <strong>Business Inquiries:</strong><br>
+                                <a href="mailto:harikrishnabusservice@gmail.com
+ style="color: white; text-decoration: none;">harikrishnabusservice@gmail.com
+</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                        </div>
+                                           </div>
+                </div>
+            </div>
+            
+            <!-- Quick Contact Form -->
+            <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px); max-width: 600px; margin: 0 auto;">
+                <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1.5rem;">💬 Quick Inquiry Form</h3>
+                <div style="display: grid; gap: 1rem;">
+                    <input type="text" placeholder="Your Name" style="padding: 1rem; border: none; border-radius: 10px; font-size: 1rem;">
+                    <input type="tel" placeholder="Mobile Number" style="padding: 1rem; border: none; border-radius: 10px; font-size: 1rem;">
+                    <input type="email" placeholder="Email Address" style="padding: 1rem; border: none; border-radius: 10px; font-size: 1rem;">
+                    <select style="padding: 1rem; border: none; border-radius: 10px; font-size: 1rem;">
+                        <option>Select Tour Package</option>
+                        <option>Rajasthan Divine Circuit</option>
+                        <option>Uttarakhand Spiritual Journey</option>
+                        <option>Nainital Hill Station</option>
+                        <option>Uttrakhand Char Dham</option>
+                        <option>UP Spiritual Triangle</option>
+                        <option>Krishna Leela Bhoomi</option>
+                    </select>
+                    <textarea placeholder="Your Message (Optional)" rows="3" style="padding: 1rem; border: none; border-radius: 10px; font-size: 1rem; resize: vertical;"></textarea>
+                    <button style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;" onclick="submitInquiry()">
+                        📨 Send Inquiry
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Media & Additional Info -->
+    <div style="background: #2c3e50; color: white; padding: 2rem 0;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <h4 style="margin-bottom: 1rem; font-size: 1.2rem;">🌐 Follow Us</h4>
+                    <div style="display: flex; justify-content: center; gap: 1rem;">
+                        <a href="#" style="color: white; font-size: 1.5rem; text-decoration: none;">📘</a>
+                        <a href="#" style="color: white; font-size: 1.5rem; text-decoration: none;">📷</a>
+                        <a href="#" style="color: white; font-size: 1.5rem; text-decoration: none;">🐦</a>
+                        <a href="#" style="color: white; font-size: 1.5rem; text-decoration: none;">📺</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 1rem; font-size: 1.2rem;">🏆 Certifications</h4>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Government Approved Tour Operator<br>ISO 9001:2015 Certified<br>Travel Trade Association Member</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 1rem; font-size: 1.2rem;">🔒 Safe & Secure</h4>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">SSL Secured Payments<br>Licensed & Insured<br>100% Safe Travel Guarantee</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #34495e;">
+                <p style="opacity: 0.7;">© 2024 harikrishna bus service. All rights reserved. | Made with ❤️ for pilgrims across India</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="modalTitle">Select Your Seats</h2>
+                <p id="modalSubtitle">Choose your preferred seats for the journey</p>
+            </div>
+            
+            <div class="bus-layout">
+                
+<div style="text-align: center; margin-bottom: 1.5rem;">
+    <h3 style="color: #4a90e2;">🗓️ Departure Date: <span id="departureDate">June 14, 2025</span></h3>
+    <p style="font-size: 1.1rem;">🕒 Departure Time: <span id="departureTime">8:00 pm from the Faridabad For Other Points We Will Update You On Whatsaap</span></p>
+    <p style="font-size: 1.1rem;">📍 Pickup Points: <span id="pickupPoints">Faridabad(Old Faridabad Metro Station,Bata Chowk metro Station,Bata Flyover,Eicher Chowk,Pyali Chowk,Majid At Sainik Colony Road ) Gurugram(Valley View Estate,Badshahpur M3M CRPF Camp)</span></p>
+</div>
+<div class="bus-container">
+                    <div class="driver-area">
+                        🚗 Driver Section
+                    </div>
+                    
+                    <div class="seats-grid" id="seatsGrid">
+                        <!-- Seats will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="seat-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: linear-gradient(135deg, #28a745, #20c997);"></div>
+                            <span>Available</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: linear-gradient(135deg, #dc3545, #c82333);"></div>
+                            <span>Occupied</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: linear-gradient(135deg, #ff7b00, #ff4500);"></div>
+                            <span>Selected</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="booking-summary">
+                    <h4>🎫 Booking Summary</h4>
+                    <div class="summary-row">
+                        <span>Tour Package:</span>
+                        <span id="packageName">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Selected Seats:</span>
+                        <span id="selectedSeats">None</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Price per person:</span>
+                        <span id="pricePerPerson">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Total Amount:</span>
+                        <span id="totalAmount">₹0</span>
+                    </div>
+                </div>
+                
+                <button class="pay-btn" id="payBtn" onclick="openPayment()" disabled>
+                    💳 Proceed to Payment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="payment-modal">
+            <h2>💳 Secure Payment</h2>
+            <div class="booking-summary">
+                <div class="summary-row">
+                    <span>Total Amount:</span>
+                    <span id="finalAmount">₹0</span>
+                </div>
+            </div>
+            
+            <div class="payment-options">
+                <div class="payment-option" onclick="selectPayment('upi')">
+                    <span>📱</span>
+                    <div>
+                        <strong>UPI Payment</strong>
+                        <br><small>Pay with Google Pay, PhonePe, Paytm</small>
+                    </div>
+                </div>
+                <div class="payment-option" onclick="selectPayment('card')">
+                    <span>💳</span>
+                    <div>
+                        <strong>Credit/Debit Card</strong>
+                        <br><small>Visa, Mastercard, RuPay</small>
+                    </div>
+                </div>
+                <div class="payment-option" onclick="selectPayment('netbanking')">
+                    <span>🏦</span>
+                    <div>
+                        <strong>Net Banking</strong>
+                        <br><small>All major banks supported</small>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="pay-btn" onclick="processPayment()">
+                🔒 Pay Securely
+            </button>
+            
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                🔒 Your payment is secured with 256-bit SSL encryption
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentTour = '';
+        let currentPrice = 0;
+        let selectedSeats = [];
+        let occupiedSeats = [5, 12, 18, 23, 31, 37, 42]; // Example occupied seats
+
+        function openBooking(tourName, price) {
+            currentTour = tourName;
+            currentPrice = price;
+            selectedSeats = [];
+            
+            document.getElementById('modalTitle').textContent = `${tourName} - Seat Selection`;
+            document.getElementById('packageName').textContent = tourName;
+            document.getElementById('pricePerPerson').textContent = `₹${price}`;
+            
+            generateSeats();
+            updateSummary();
+            document.getElementById('bookingModal').style.display = 'block';
+        }
+
+        function generateSeats() {
+            const seatsGrid = document.getElementById('seatsGrid');
+            seatsGrid.innerHTML = '';
+            
+            for (let i = 1; i <= 50; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.textContent = i;
+                seat.dataset.seatNumber = i;
+                
+                if (occupiedSeats.includes(i)) {
+                    seat.classList.add('occupied');
+                } else {
+                    seat.onclick = () => toggleSeat(i);
+                }
+                
+                seatsGrid.appendChild(seat);
+            }
+        }
+
+        function toggleSeat(seatNumber) {
+            const seat = document.querySelector(`[data-seat-number="${seatNumber}"]`);
+            
+            if (selectedSeats.includes(seatNumber)) {
+                selectedSeats = selectedSeats.filter(s => s !== seatNumber);
+                seat.classList.remove('selected');
+            } else {
+                if (selectedSeats.length < 10) { // Max 10 seats per booking
+                    selectedSeats.push(seatNumber);
+                    seat.classList.add('selected');
+                } else {
+                    alert('Maximum 10 seats can be selected per booking');
+                }
+            }
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const seatsText = selectedSeats.length > 0 ? selectedSeats.sort((a, b) => a - b).join(', ') : 'None';
+            const total = selectedSeats.length * currentPrice;
+            
+            document.getElementById('selectedSeats').textContent = seatsText;
+            document.getElementById('totalAmount').textContent = `₹${total}`;
+            
+            const payBtn = document.getElementById('payBtn');
+            if (selectedSeats.length > 0) {
+                payBtn.disabled = false;
+                payBtn.textContent = `💳 Pay ₹${total} & Book Now`;
+            } else {
+                payBtn.disabled = true;
+                payBtn.textContent = '💳 Proceed to Payment';
+            }
+        }
+
+        function openPayment() {
+            if (selectedSeats.length === 0) return;
+            
+            const total = selectedSeats.length * currentPrice;
+            document.getElementById('finalAmount').textContent = `₹${total}`;
+            document.getElementById('paymentModal').style.display = 'block';
+        }
+
+        function selectPayment(method) {
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+        }
+
+        function processPayment() {
+            const selectedOption = document.querySelector('.payment-option.selected');
+            if (!selectedOption) {
+                alert('Please select a payment method');
+                return;
+            }
+            
+            // Add selected seats to occupied seats array
+            selectedSeats.forEach(seatNumber => {
+                if (!occupiedSeats.includes(seatNumber)) {
+                    occupiedSeats.push(seatNumber);
+                }
+            });
+            
+            // Update seat colors to red (occupied)
+            selectedSeats.forEach(seatNumber => {
+                const seat = document.querySelector(`[data-seat-number="${seatNumber}"]`);
+                if (seat) {
+                    seat.classList.remove('selected');
+                    seat.classList.add('occupied');
+                    seat.onclick = null; // Remove click functionality
+                }
+            });
+            
+            // Simulate payment processing
+            alert(`🎉 Booking Confirmed!\n\nTour: ${currentTour}\nSeats: ${selectedSeats.join(', ')}\nAmount: ₹${selectedSeats.length * currentPrice}\n\nYou will receive confirmation details via SMS and email.\n\n✅ Your seats are now reserved and marked as occupied.`);
+            
+            closeModal();
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            document.getElementById('paymentModal').style.display = 'none';
+            selectedSeats = [];
+        }
+
+        function openMap() {
+            window.open('https://maps.google.com/maps?q=Faridabad+Haryana+Temple+Road', '_blank');
+        }
+
+        function submitInquiry() {
+            alert('🙏 Thank you for your inquiry!\n\nWe have received your message and will contact you within 2 hours.\n\nFor immediate assistance, please call: +91 8368194009,+91 8700579949');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const bookingModal = document.getElementById('bookingModal');
+            const paymentModal = document.getElementById('paymentModal');
+            
+            if (event.target === bookingModal) {
+                closeModal();
+            }
+            if (event.target === paymentModal) {
+                document.getElementById('paymentModal').style.display = 'none';
+            }
+        }
+    </script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+function processPayment() {
+    const total = selectedSeats.length * currentPrice;
+
+    const options = {
+        key: "rzp_test_YourKeyHere", // Replace with your Razorpay test/live key
+        amount: total * 100, // in paise
+        currency: "INR",
+        name: "Hari Krishna Bus Service",
+        description: `Booking for ${currentTour}`,
+        handler: function (response) {
+            alert(`🎉 Payment Successful!\n\nRazorpay Payment ID: ${response.razorpay_payment_id}`);
+
+            selectedSeats.forEach(seatNumber => {
+                if (!occupiedSeats.includes(seatNumber)) {
+                    occupiedSeats.push(seatNumber);
+                    const seat = document.querySelector(`[data-seat-number="${seatNumber}"]`);
+                    if (seat) {
+                        seat.classList.remove('selected');
+                        seat.classList.add('occupied');
+                        seat.onclick = null;
+                    }
+                }
+            });
+
+            closeModal();
+            document.getElementById('paymentModal').style.display = 'none';
+        },
+        prefill: {
+            name: "Yatri",
+            email: "yatri@example.com",
+            contact: "9876543210"
+        },
+        theme: {
+            color: "#ff4500"
+        }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+}
+</script>
